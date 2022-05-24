@@ -9,6 +9,7 @@ const notify = require('gulp-notify');
 const concat = require('gulp-concat');
 const mediaQueries = require('gulp-group-css-media-queries');
 const autoprefixer = require('gulp-autoprefixer');
+const sourcemaps = require('gulp-sourcemaps');
 const del = require('del');
 
 //обработка html
@@ -24,9 +25,8 @@ const html = () => {
 
 //обработка стилей
 const styles = () => {
-    return src('./src/scss/main.{scss, saas}', {
-            sourcemaps: true
-        })
+    return src('./src/scss/main.{scss, saas}')
+        .pipe(sourcemaps.init())
         .pipe(sass({
             outputStyle: 'compressed'
         }).on('error', notify.onError()))
@@ -35,22 +35,17 @@ const styles = () => {
             overrideBrowserslist: ['last 10 versions']
         }))
         .pipe(mediaQueries())
-        .pipe(dest('./dist/css', {
-            sourcemaps: true
-        }))
+        .pipe(sourcemaps.write())
+        .pipe(dest('./dist/css'))
         .pipe(browserSync.stream());
 }
 
 
 //скрипты
 const scripts = () => {
-    return src('./src/js/main.js', {
-            sourcemaps: true
-        })
+    return src('./src/js/main.js')
         .pipe(concat('main.min.js'))
-        .pipe(dest('./dist/js', {
-            sourcemaps: true
-        }))
+        .pipe(dest('./dist/js'))
         .pipe(browserSync.stream());
 }
 

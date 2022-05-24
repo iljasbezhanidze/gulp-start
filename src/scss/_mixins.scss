@@ -78,7 +78,6 @@ $breakpoint-mobile: 420px;
     }
 }
 
-
 //list counter
 //usage: @include child-counter('> li', '', '\a'){...}
 @mixin child-counter($child-selector, $content-before:'', $content-after:'') {
