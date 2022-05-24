@@ -77,7 +77,7 @@ const server = () => {
 //наблюдение за изменениями в файлах
 const watcher = () => {
     watch('./src/**/*.html', html)
-    watch(['./src/**/*.scss', './#src/**/*.sass', './#src/**/*.css'], styles)
+    watch(['./src/**/*.scss', './src/**/*.sass', './src/**/*.css'], styles)
     watch('./src/js/*.js', scripts)
     watch('./src/img/**.*', images)
 }
