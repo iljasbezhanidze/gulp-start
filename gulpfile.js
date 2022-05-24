@@ -1,7 +1,7 @@
 const { src, dest, watch, series, parallel } = require('gulp');
 const browserSync = require('browser-sync').create();
 
-//плагины
+//плагіны
 const fileInclude = require('gulp-file-include');
 const sass = require('gulp-dart-sass');
 const plumber = require('gulp-plumber');
@@ -12,7 +12,7 @@ const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const del = require('del');
 
-//обработка html
+//обробка html
 const html = () => {
     return src('./src/*.html')
         .pipe(plumber({
@@ -23,7 +23,7 @@ const html = () => {
         .pipe(browserSync.stream());
 }
 
-//обработка стилей
+//обробка стилів
 const styles = () => {
     return src('./src/scss/main.{scss, saas}')
         .pipe(sourcemaps.init())
@@ -41,21 +41,23 @@ const styles = () => {
 }
 
 
-//скрипты
+//скріпты
 const scripts = () => {
     return src('./src/js/main.js')
+        .pipe(sourcemaps.init())
         .pipe(concat('main.min.js'))
+        .pipe(sourcemaps.write())
         .pipe(dest('./dist/js'))
         .pipe(browserSync.stream());
 }
 
-//переносим картинки в dist
+//переносим зображення в dist
 const images = () => {
     return src('./src/img/**.*')
         .pipe(dest('./dist/img'))
 }
 
-//перезапись папки dist при релоаде
+//перезапис папки dist при перезавантаженні
 const clear = () => {
     return del('./dist')
 }
@@ -69,7 +71,7 @@ const server = () => {
     })
 }
 
-//наблюдение за изменениями в файлах
+//спостереження за змінами у файлах
 const watcher = () => {
     watch('./src/**/*.html', html)
     watch(['./src/**/*.scss', './src/**/*.sass', './src/**/*.css'], styles)
@@ -77,14 +79,14 @@ const watcher = () => {
     watch('./src/img/**.*', images)
 }
 
-//задачи
+//таски
 exports.html = html;
 exports.watch = watch;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.images = images;
 
-//сборка | очередь запуска задач
+//live сбірка при змінах | черга запуску тасків
 exports.default = series(
     clear,
     html,
