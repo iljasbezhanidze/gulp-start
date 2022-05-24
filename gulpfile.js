@@ -1,83 +1,87 @@
-const { src, dest, watch, series, parallel } = require('gulp');
-const browserSync = require('browser-sync').create();
+const { src, dest, watch, series, parallel } = require('gulp'),
+    browserSync = require('browser-sync').create(),
 
 //плагіны
-const fileInclude = require('gulp-file-include');
-const sass = require('gulp-dart-sass');
-const plumber = require('gulp-plumber');
-const notify = require('gulp-notify');
-const concat = require('gulp-concat');
-const mediaQueries = require('gulp-group-css-media-queries');
-const autoprefixer = require('gulp-autoprefixer');
-const sourcemaps = require('gulp-sourcemaps');
-const del = require('del');
+    fileInclude = require('gulp-file-include'),
+    sass = require('gulp-dart-sass'),
+    plumber = require('gulp-plumber'),
+    notify = require('gulp-notify'),
+    concat = require('gulp-concat'),
+    mediaQueries = require('gulp-group-css-media-queries'),
+    autoprefixer = require('gulp-autoprefixer'),
+    sourcemaps = require('gulp-sourcemaps'),
+    ttf2woff = require('gulp-ttf2woff'),
+    ttf2woff2 = require('gulp-ttftowoff2'),
+    del = require('del'),
 
 //обробка html
-const html = () => {
-    return src('./src/*.html')
-        .pipe(plumber({
-            errorHandler: notify.onError()
-        }))
-        .pipe(fileInclude())
-        .pipe(dest('./dist'))
-        .pipe(browserSync.stream());
-}
+    html = () => {
+        return src('./src/*.html')
+            .pipe(plumber({
+                errorHandler: notify.onError()
+            }))
+            .pipe(fileInclude())
+            .pipe(dest('./dist'))
+            .pipe(browserSync.stream());
+    },
 
 //обробка стилів
-const styles = () => {
-    return src('./src/scss/main.{scss, saas}')
-        .pipe(sourcemaps.init())
-        .pipe(sass({
-            outputStyle: 'compressed'
-        }).on('error', notify.onError()))
-        .pipe(concat('main.min.css'))
-        .pipe(autoprefixer({
-            overrideBrowserslist: ['last 10 versions']
-        }))
-        .pipe(mediaQueries())
-        .pipe(sourcemaps.write('.'))
-        .pipe(dest('./dist/css'))
-        .pipe(browserSync.stream());
-}
+    styles = () => {
+        return src('./src/scss/main.{scss, saas}')
+            .pipe(sourcemaps.init())
+            .pipe(sass({
+                outputStyle: 'compressed'
+            }).on('error', notify.onError()))
+            .pipe(concat('main.min.css'))
+            .pipe(autoprefixer({
+                overrideBrowserslist: ['last 10 versions']
+            }))
+            .pipe(mediaQueries())
+            .pipe(sourcemaps.write('.'))
+            .pipe(dest('./dist/css'))
+            .pipe(browserSync.stream());
+    },
 
 
 //скріпты
-const scripts = () => {
-    return src('./src/js/main.js')
-        .pipe(sourcemaps.init())
-        .pipe(concat('main.min.js'))
-        .pipe(sourcemaps.write('.'))
-        .pipe(dest('./dist/js'))
-        .pipe(browserSync.stream());
-}
+    scripts = () => {
+        return src('./src/js/main.js')
+            .pipe(sourcemaps.init())
+            .pipe(concat('main.min.js'))
+            .pipe(sourcemaps.write('.'))
+            .pipe(dest('./dist/js'))
+            .pipe(browserSync.stream());
+    },
 
 //переносим зображення в dist
-const images = () => {
-    return src('./src/img/**.*')
-        .pipe(dest('./dist/img'))
-}
+    images = () => {
+        return src('./src/img/**.*')
+            .pipe(dest('./dist/img'))
+    },
+
+    fonts = () => {
+        src('./src/fonts/**.ttf')
+        .pipe(ttf2woff())
+        .pipe(dest('./dist/fonts/'))
+    return src('./src/fonts/**.ttf')
+        .pipe(ttf2woff2())
+        .pipe(dest('./dist/fonts/'))
+    },
 
 //перезапис папки dist при перезавантаженні
-const clear = () => {
-    return del('./dist')
-}
+    clear = () => del('./dist'),
 
 //live сервер
-const server = () => {
-    browserSync.init({
-        server: {
-            baseDir: 'dist'
-        }
-    })
-}
+    server = () => browserSync.init({server: {baseDir: 'dist'}}),
 
 //спостереження за змінами у файлах
-const watcher = () => {
-    watch('./src/**/*.html', html)
-    watch(['./src/**/*.scss', './src/**/*.sass', './src/**/*.css'], styles)
-    watch('./src/js/*.js', scripts)
-    watch('./src/img/**.*', images)
-}
+    watcher = () => {
+        watch('./src/**/*.html', html)
+        watch(['./src/**/*.scss', './src/**/*.sass', './src/**/*.css'], styles)
+        watch('./src/js/*.js', scripts)
+        watch('./src/img/**.*', images)
+        watch('.src/fonts/**.ttf', fonts)
+    };
 
 //таски
 exports.html = html;
@@ -90,6 +94,7 @@ exports.images = images;
 exports.default = series(
     clear,
     html,
+    fonts,
     styles,
     scripts,
     images,
