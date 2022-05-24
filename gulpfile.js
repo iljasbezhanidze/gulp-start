@@ -35,7 +35,7 @@ const styles = () => {
             overrideBrowserslist: ['last 10 versions']
         }))
         .pipe(mediaQueries())
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.'))
         .pipe(dest('./dist/css'))
         .pipe(browserSync.stream());
 }
@@ -46,7 +46,7 @@ const scripts = () => {
     return src('./src/js/main.js')
         .pipe(sourcemaps.init())
         .pipe(concat('main.min.js'))
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.'))
         .pipe(dest('./dist/js'))
         .pipe(browserSync.stream());
 }
