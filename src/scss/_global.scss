@@ -8,5 +8,42 @@ body {
     @include adaptive-font(64, 32);
     color: var(--accent-color);
     line-height: 1.4;
+    font-weight: 400;
 }
 
+.a {
+        font-family: Arial;
+        font-style: italic;
+        font-weight: inherit;
+        font-size: 14px;
+        line-height: 18px;
+        background-image: url('example.png');
+        background-color: red;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 5px;
+        margin-bottom: 50px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        padding-left: 50px;
+        padding-right: 25px;
+        border-color: rgb(161, 82, 82);
+        border-style: solid;
+        border-width: 3px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 15px;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 2px;
+        animation-name: identifier-htline;
+}
+
+@keyframes identifier-htline {
+    from {
+
+    }
+    to {
+
+    }
+}

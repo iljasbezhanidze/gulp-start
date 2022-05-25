@@ -11,7 +11,8 @@ const { src, dest, watch, series, parallel } = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     sourcemaps   = require('gulp-sourcemaps'),
     ttf2woff2    = require('gulp-ttftowoff2'),
-    cleanCSS = require('gulp-clean-css'),
+    cleanCSS     = require('gulp-clean-css'),
+    shorthand    = require('gulp-shorthand'),
     del          = require('del'),
 
 //обробка html
@@ -35,6 +36,7 @@ const { src, dest, watch, series, parallel } = require('gulp'),
                 overrideBrowserslist: ['last 5 versions']
             }))
             .pipe(mediaQueries())
+            .pipe(shorthand())
             .pipe(cleanCSS({level: 2}))
             .pipe(sourcemaps.write('.'))
             .pipe(dest('./dist/css'))
