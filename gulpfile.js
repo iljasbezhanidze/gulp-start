@@ -2,16 +2,17 @@ const { src, dest, watch, series, parallel } = require('gulp'),
     browserSync = require('browser-sync').create(),
 
 //плагіны
-    fileInclude = require('gulp-file-include'),
-    sass = require('gulp-dart-sass'),
-    plumber = require('gulp-plumber'),
-    notify = require('gulp-notify'),
-    concat = require('gulp-concat'),
+    fileInclude  = require('gulp-file-include'),
+    sass         = require('gulp-dart-sass'),
+    plumber      = require('gulp-plumber'),
+    notify       = require('gulp-notify'),
+    concat       = require('gulp-concat'),
     mediaQueries = require('gulp-group-css-media-queries'),
     autoprefixer = require('gulp-autoprefixer'),
-    sourcemaps = require('gulp-sourcemaps'),
-    ttf2woff2 = require('gulp-ttftowoff2'),
-    del = require('del'),
+    sourcemaps   = require('gulp-sourcemaps'),
+    ttf2woff2    = require('gulp-ttftowoff2'),
+    cleanCSS = require('gulp-clean-css'),
+    del          = require('del'),
 
 //обробка html
     html = () => {
@@ -28,14 +29,13 @@ const { src, dest, watch, series, parallel } = require('gulp'),
     styles = () => {
         return src('./src/scss/main.{scss, saas}')
             .pipe(sourcemaps.init())
-            .pipe(sass({
-                outputStyle: 'compressed'
-            }).on('error', notify.onError()))
+            .pipe(sass().on('error', notify.onError()))
             .pipe(concat('main.min.css'))
             .pipe(autoprefixer({
-                overrideBrowserslist: ['last 10 versions']
+                overrideBrowserslist: ['last 5 versions']
             }))
             .pipe(mediaQueries())
+            .pipe(cleanCSS({level: 2}))
             .pipe(sourcemaps.write('.'))
             .pipe(dest('./dist/css'))
             .pipe(browserSync.stream());
@@ -60,9 +60,9 @@ const { src, dest, watch, series, parallel } = require('gulp'),
 
 // робота із шрифтами
     fonts = () => {
-    return src('./src/fonts/**.ttf')
-        .pipe(ttf2woff2())
-        .pipe(dest('./dist/fonts/'))
+        return src('./src/fonts/**.ttf')
+            .pipe(ttf2woff2())
+            .pipe(dest('./dist/fonts/'))
     },
 
 //перезапис папки dist при перезавантаженні

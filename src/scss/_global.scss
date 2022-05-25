@@ -1,8 +1,12 @@
 //підключення шрифтів
 @include font-face("SourceCodePro", "../fonts/SourceCodePro", 400, normal);
 
+//глобальні стилі
 body {
     font-family: 'SourceCodePro', sans-serif;
+    background-color: var(--accent-bcg-color);
     @include adaptive-font(64, 32);
     color: var(--accent-color);
+    line-height: 1.4;
 }
+
