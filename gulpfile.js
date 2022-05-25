@@ -10,7 +10,6 @@ const { src, dest, watch, series, parallel } = require('gulp'),
     mediaQueries = require('gulp-group-css-media-queries'),
     autoprefixer = require('gulp-autoprefixer'),
     sourcemaps = require('gulp-sourcemaps'),
-    ttf2woff = require('gulp-ttf2woff'),
     ttf2woff2 = require('gulp-ttftowoff2'),
     del = require('del'),
 
@@ -59,10 +58,8 @@ const { src, dest, watch, series, parallel } = require('gulp'),
             .pipe(dest('./dist/img'))
     },
 
+// робота із шрифтами
     fonts = () => {
-        src('./src/fonts/**.ttf')
-        .pipe(ttf2woff())
-        .pipe(dest('./dist/fonts/'))
     return src('./src/fonts/**.ttf')
         .pipe(ttf2woff2())
         .pipe(dest('./dist/fonts/'))
