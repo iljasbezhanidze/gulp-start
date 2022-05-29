@@ -1,0 +1,12 @@
+//mixin connection fonts
+//usage: @include font-face("nameFonts", "../fonts/nameFonts", 400, normal);
+@mixin font-face($font-family, $url, $weight, $style: normal) {
+    @font-face {
+        font-family: "#{$font-family}";
+        src: local('#{$font-family}'),
+        url('../fonts/#{$url}.woff2') format("woff2");
+        font-weight: #{$weight};
+        font-display: swap;
+        font-style: $style;
+    }
+}

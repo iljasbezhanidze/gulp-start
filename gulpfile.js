@@ -13,6 +13,7 @@ const { src, dest, watch, series, parallel } = require('gulp'),
     ttf2woff2    = require('gulp-ttftowoff2'),
     cleanCSS     = require('gulp-clean-css'),
     shorthand    = require('gulp-shorthand'),
+    // shorthand    = require('concat-css-properties'),
     del          = require('del'),
 
 //обробка html
@@ -28,7 +29,10 @@ const { src, dest, watch, series, parallel } = require('gulp'),
 
 //обробка стилів
     styles = () => {
-        return src('./src/scss/main.{scss, saas}')
+        return src([
+            './src/scss/base/main.{scss, saas}',
+            './src/scss/**.{scss, sass, css}'
+            ])
             .pipe(sourcemaps.init())
             .pipe(sass().on('error', notify.onError()))
             .pipe(concat('main.min.css'))
@@ -36,7 +40,7 @@ const { src, dest, watch, series, parallel } = require('gulp'),
                 overrideBrowserslist: ['last 5 versions']
             }))
             .pipe(mediaQueries())
-            .pipe(shorthand())
+            // .pipe(shorthand())
             .pipe(cleanCSS({level: 2}))
             .pipe(sourcemaps.write('.'))
             .pipe(dest('./dist/css'))
@@ -76,7 +80,7 @@ const { src, dest, watch, series, parallel } = require('gulp'),
 //спостереження за змінами у файлах
     watcher = () => {
         watch('./src/**/*.html', html)
-        watch(['./src/**/*.scss', './src/**/*.sass', './src/**/*.css'], styles)
+        watch(['./src/**/*.css', './src/**/*.scss', './src/**/*.sass'], styles)
         watch('./src/js/*.js', scripts)
         watch('./src/img/**.*', images)
         watch('.src/fonts/**.ttf', fonts)

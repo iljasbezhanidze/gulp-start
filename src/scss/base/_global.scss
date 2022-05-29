@@ -11,10 +11,10 @@ body {
     font-weight: 400;
 }
 
-.a {
+.class {
         font-family: Arial;
         font-style: italic;
-        font-weight: inherit;
+        font-weight: 400;
         font-size: 14px;
         line-height: 18px;
         background-image: url('example.png');
@@ -25,10 +25,10 @@ body {
         margin-right: auto;
         margin-top: 5px;
         margin-bottom: 50px;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        padding-left: 50px;
-        padding-right: 25px;
+        // padding-bottom: 10px;
+        // padding-top: 10px;
+        // padding-left: 50px;
+        // padding-right: 25px;
         border-color: rgb(161, 82, 82);
         border-style: solid;
         border-width: 3px;
@@ -36,7 +36,9 @@ body {
         border-top-right-radius: 15px;
         border-bottom-left-radius: 30px;
         border-bottom-right-radius: 2px;
-        animation-name: identifier-htline;
+}
+body {
+    // background-color: lemonchiffon;
 }
 
 @keyframes identifier-htline {
