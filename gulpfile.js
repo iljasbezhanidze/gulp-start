@@ -31,7 +31,8 @@ const { src, dest, watch, series, parallel } = require('gulp'),
     styles = () => {
         return src([
             './src/scss/base/main.{scss, saas}',
-            './src/scss/**.{scss, sass, css}'
+            './src/scss/**.{scss, sass, css}',
+            './src/scss/blocks/**.{scss, sass, css}'
             ])
             .pipe(sourcemaps.init())
             .pipe(sass().on('error', notify.onError()))
