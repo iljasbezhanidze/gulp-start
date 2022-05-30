@@ -82,7 +82,7 @@ const { src, dest, watch, series, parallel } = require('gulp'),
     watcher = () => {
         watch('./src/**/*.html', html)
         watch(['./src/**/*.css', './src/**/*.scss', './src/**/*.sass'], styles)
-        watch('./src/js/*.js', scripts)
+        watch('./src/js/**/**.js', scripts)
         watch('./src/img/**.*', images)
         watch('.src/fonts/**.ttf', fonts)
     };

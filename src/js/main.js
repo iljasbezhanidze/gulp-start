@@ -1,1 +1,2 @@
-console.log('hui')
+const swiper = require('./components/swiper')
+swiper()
