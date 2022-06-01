@@ -65,7 +65,6 @@ const images = () => {
 
 const fonts = () => {
     return src('./src/fonts/**.ttf')
-        .pipe(ttf2woff2())
         .pipe(dest('./dist/fonts/'))
 }
 
@@ -123,7 +122,7 @@ const stylesBuild = () => {
 }
 
 const fontsBuild = () => {
-    return src('./dist/fonts/**.woff2')
+    return src('./dist/fonts/**.ttf')
         .pipe(ttf2woff2())
         .pipe(dest('./build/fonts/'))
 }

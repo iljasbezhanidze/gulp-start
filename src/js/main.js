@@ -1,2 +1,2 @@
-const swiper = require('./components/swiper')
-swiper()
+// const swiper = require('./components/swiper')
+// swiper()
