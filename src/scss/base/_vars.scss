@@ -1,7 +1,25 @@
 //variables
-:root {
-    --accent-color: rgb(27, 26, 26);
-    --accent-bcg-color: #fff;
-}
-
 $maxWidth: 1920;
+
+$primary: #14CBDA;
+$secondary: #9de8e3;
+
+$colors: (
+    'primary': $primary,
+    'secondary': $secondary,
+);
+
+@each $c_name,
+$c_HEX in $colors {
+    [class*="_c-#{$c_name}"] {
+        color: #{$c_HEX};
+    }
+
+    [class*="_bc-#{$c_name}"] {
+        border-color: #{$c_HEX};
+    }
+
+    [class*="_bcg-#{$c_name}"] {
+        background-color: #{$c_HEX};
+    }
+}

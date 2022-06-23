@@ -16,6 +16,7 @@ const { src, dest, watch, series, parallel } = require('gulp'),
     notify = require('gulp-notify'),
     plumber = require('gulp-plumber'),
     ttf2woff2 = require('gulp-ttftowoff2'),
+    fs = require('fs'),
     del = require('del')
 
     //DEV TASKS------------------------------
@@ -29,8 +30,25 @@ const html = () => {
         .pipe(browserSync.stream());
     }
 
+// const cb = () => {}
+// const appendFontMixin = (done) => {
+//         fs.writeFile('./src/scss/base/fonts.scss', `
+//             @mixin font-face($font-family, $url, $weight, $style: normal) {
+//                 @font-face {
+//                     font-family: "#{$font-family}";
+//                     src: local("#{$font-family}"),
+//                     url("../fonts/#{$url}.ttf") format("ttf");
+//                     font-weight: #{$weight};
+//                     font-display: swap;
+//                     font-style: $style;
+//                 }
+//         }`, cb)
+//         done()
+//     }
+
 const styles = () => {
     return src([
+            // appendFontMixin(),
             './src/scss/base/main.{scss, saas}',
             './src/scss/**.{scss, sass, css}',
             './src/scss/blocks/**.{scss, sass, css}',
@@ -96,6 +114,7 @@ exports.images = images;
 exports.default = series(
     clear,
     html,
+    // appendFontMixin,
     fonts,
     styles,
     scripts,
