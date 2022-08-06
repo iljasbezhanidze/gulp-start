@@ -10,13 +10,11 @@ const { src, dest, watch, series, parallel } = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     cleanCSS = require('gulp-clean-css'),
     sourcemaps = require('gulp-sourcemaps'),
-    // purgecss = require('gulp-purgecss'),
     mediaQueries = require('gulp-group-css-media-queries'),
     concat = require('gulp-concat'),
     notify = require('gulp-notify'),
     plumber = require('gulp-plumber'),
     ttf2woff2 = require('gulp-ttftowoff2'),
-    fs = require('fs'),
     del = require('del')
 
     //DEV TASKS------------------------------
@@ -29,22 +27,6 @@ const html = () => {
         .pipe(dest('./dist'))
         .pipe(browserSync.stream());
     }
-
-// const cb = () => {}
-// const appendFontMixin = (done) => {
-//         fs.writeFile('./src/scss/base/fonts.scss', `
-//             @mixin font-face($font-family, $url, $weight, $style: normal) {
-//                 @font-face {
-//                     font-family: "#{$font-family}";
-//                     src: local("#{$font-family}"),
-//                     url("../fonts/#{$url}.ttf") format("ttf");
-//                     font-weight: #{$weight};
-//                     font-display: swap;
-//                     font-style: $style;
-//                 }
-//         }`, cb)
-//         done()
-//     }
 
 const styles = () => {
     return src([
@@ -115,7 +97,6 @@ exports.images = images;
 exports.default = series(
     clear,
     html,
-    // appendFontMixin,
     fonts,
     styles,
     scripts,
@@ -147,9 +128,15 @@ const fontsBuild = () => {
         .pipe(dest('./build/fonts/'))
 }
 
+const imagesBuild = () => {
+    return src('./dist/img/**.*')
+        .pipe(dest('./build/img'))
+}
+
 exports.build = series(
     clearBuild,
     htmlBuild,
     stylesBuild,
-    fontsBuild
+    fontsBuild,
+    imagesBuild
 )
