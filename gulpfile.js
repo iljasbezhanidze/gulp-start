@@ -83,6 +83,7 @@ const images = () => {
 
 const fonts = () => {
     return src('./src/fonts/**.ttf')
+        .pipe(ttf2woff2())
         .pipe(dest('./dist/fonts/'))
 }
 
