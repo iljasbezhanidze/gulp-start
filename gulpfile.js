@@ -142,7 +142,7 @@ const stylesBuild = () => {
 }
 
 const fontsBuild = () => {
-    return src('./dist/fonts/**.ttf')
+    return src('./dist/fonts/**.woff2')
         .pipe(ttf2woff2())
         .pipe(dest('./build/fonts/'))
 }
